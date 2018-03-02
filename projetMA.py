@@ -75,7 +75,36 @@ def pivotGauss(Tab):
 			for j in range(i,n):
 				Tab[0][i][j]=int(Tab[0][i][j]/k)
 			Tab[1][i]=int(Tab[1][i]/k)
-	return Tab
+	if(SiSolution(Tab)):
+		return Tab
+	else:
+		return False
+
+def remonterGaus(tab):
+	n=len(tab[0])
+	i=n-1
+	colonne=n-1
+	while i>=0:
+		print(i,colonne)
+		if tab[0][i][colonne]!=1 and tab[0][i][colonne]!=0: #division 
+			tab[1][i]/=tab[0][i][colonne]
+			tab[0][i][colonne]/=tab[0][i][colonne]
+		ligne=1
+		while ligne<=i:#soustration
+			tab[1][i-ligne]-=tab[0][i-ligne][colonne]*tab[1][i]
+			tab[0][i-ligne][colonne]-=tab[0][i-ligne][colonne]*tab[0][i][colonne]
+
+			ligne+=1
+
+		i-=1
+		colonne-=1
+
+	return tab
+
+
+
+
+
 
 """	if(SiSolution(Tab)):
 		i=n
@@ -93,10 +122,6 @@ def SiSolution(Tab):
 				retour=True
 		if(retour==False and Tab[1][i]!=0):
 			return False
-
-
-
-
 	return True
 
 
@@ -194,6 +219,8 @@ Tab[1][5]=3
 Affiche(Tab)
 print("")
 Tab=pivotGauss(Tab)
+Affiche(Tab)
 print("")
+Tab=remonterGaus(Tab)
 Affiche(Tab)
 print(SiSolution(Tab))
