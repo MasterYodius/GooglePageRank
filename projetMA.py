@@ -14,23 +14,23 @@ def Affiche(Tab) :
 		i=i+1
 
 
-def echange(Tab,l1,l2):
+def echange(Tab,l1,l2):#O(n)
 	for i in range (0,len(Tab[0])):
 		Tab[0][l1][i],Tab[0][l2][i]=Tab[0][l2][i],Tab[0][l1][i]
 		
 	Tab[1][l1],Tab[1][l2]=Tab[1][l2],Tab[1][l1]
 	return Tab
 
-def calculLigne(Tab,pivot,cible,colonne):
+def calculLigne(Tab,pivot,cible,colonne):#O(n)
 
 	coef=Tab[0][cible][colonne]/Tab[0][pivot][colonne]
 	for i in range (0,len(Tab[0])):
-		Tab[0][cible][i]=int(Tab[0][cible][i] - coef * Tab[0][pivot][i])
+		Tab[0][cible][i]=Tab[0][cible][i] - coef * Tab[0][pivot][i]
 		
-	Tab[1][cible]=int(Tab[1][cible] - coef * Tab[1][pivot])
+	Tab[1][cible]=Tab[1][cible] - coef * Tab[1][pivot]
 	return Tab
 	
-def organiser(Tab,pivot):
+def organiser(Tab,pivot):#O(n^2)
 	
 	k=0
 	while pivot+k < len(Tab[0]):
@@ -42,18 +42,18 @@ def organiser(Tab,pivot):
 					return Tab
 				i=i+1
 		k+=1
-		print(pivot+k)
 	return Tab
 
-def pivotGauss(Tab):
+def pivotGauss(Tab):#O(n^3)
 	n=len(Tab[0])
 	colonne = 0
-	for i in range(0,n):
+	for i in range(0,n):#O(n^3)
 		if Tab[0][i][colonne]==0:
 
 			#print(i,colonne,"1")
 			#Affiche(Tab)
-			Tab = organiser(Tab,i)
+			#print("")
+			Tab = organiser(Tab,i)#O(n^2)
 			#print(i,colonne,"2")
 			#Affiche(Tab)
 
@@ -63,45 +63,67 @@ def pivotGauss(Tab):
 		for j in range(i+1,n): #boucle pour calculer les lignes en dessous 
 			
 			if(Tab[0][j][colonne]!=0):
-				Tab=calculLigne(Tab,i,j,colonne)
+				Tab=calculLigne(Tab,i,j,colonne)#O(n)
 
 		colonne+=1
 		if colonne==n:
 			break
 
-	for i in range(0,n):
+	for i in range(0,n):#si sur la diagonale il y a des chiffre neg on les divise par lui même pour le rendre positif
 		if(Tab[0][i][i]<0):
 			k=Tab[0][i][i]
 			for j in range(i,n):
 				Tab[0][i][j]=int(Tab[0][i][j]/k)
 			Tab[1][i]=int(Tab[1][i]/k)
-	if(SiSolution(Tab)):
+
+
+	if(SiSolution(Tab)):#O(n^2)
 		return Tab
 	else:
 		return False
 
-def remonterGaus(tab):
+def remonterGaus(tab):#O(n^2)
 	n=len(tab[0])
 	i=n-1
 	colonne=n-1
-	while i>=0:
-		print(i,colonne)
+	while i>=0 and colonne>=0:
+		
 		if tab[0][i][colonne]!=1 and tab[0][i][colonne]!=0: #division 
-			tab[1][i]/=tab[0][i][colonne]
-			tab[0][i][colonne]/=tab[0][i][colonne]
-		ligne=1
-		while ligne<=i:#soustration
-			tab[1][i-ligne]-=tab[0][i-ligne][colonne]*tab[1][i]
-			tab[0][i-ligne][colonne]-=tab[0][i-ligne][colonne]*tab[0][i][colonne]
+			coef=tab[0][i][colonne]
+			
+			for alex in range(i,n):
+				tab[0][i][alex]/=coef
+			tab[1][i]/=coef				
+			#Affiche(tab)	
+			#tab[1][i]/=tab[0][i][colonne]
+			#tab[0][i][colonne]/=tab[0][i][colonne]
+			ligne=1
+			while ligne <= i:#soustration
+				
+				coef=-1*tab[0][i-ligne][colonne]
+				#print("coef=",coef)
+				alex=n-1
+				while alex>i-1:
+					#print("cible",tab[0][i-ligne][alex],"pivot",tab[0][i][alex],"avant")
+					#Affiche(tab)
+					
+					tab[0][i-ligne][alex]+=tab[0][i][alex]*coef
+					
+					#print("cible",tab[0][i-ligne][alex],"pivot",tab[0][i][alex],"apres")
+					
+					alex-=1
+				tab[1][i-ligne]+=tab[1][i]*coef
+	#			tab[0][i-ligne][colonne]-=tab[0][i-ligne][colonne]*tab[0][i][colonne]
 
-			ligne+=1
+				ligne+=1
 
 		i-=1
 		colonne-=1
 
 	return tab
 
-
+def Solution(tab):
+	
 
 
 
@@ -112,7 +134,7 @@ def remonterGaus(tab):
 			for j in range():
 			i-=1
 """
-def SiSolution(Tab):
+def SiSolution(Tab):#O(n^2)
 	n=len(Tab[0])
 	
 	for i in range (0,n):
@@ -162,23 +184,23 @@ Tab[0]=dict()
 for i in range (0,3):
 	Tab[0][i]=dict()
 	
-Tab[0][0][0]=1
-Tab[0][0][1]=-1
+Tab[0][0][0]=2
+Tab[0][0][1]=1
 Tab[0][0][2]=-4
 """Tab[0][0][3]=0
 Tab[0][0][4]=0
 Tab[0][0][5]=1
 """
-Tab[0][1][0]=2
-Tab[0][1][1]=-3
-Tab[0][1][2]=4
+Tab[0][1][0]=3
+Tab[0][1][1]=3
+Tab[0][1][2]=-5
 """Tab[0][1][3]=1
 Tab[0][1][4]=0
 Tab[0][1][5]=1
 """
-Tab[0][2][0]=0
-Tab[0][2][1]=2
-Tab[0][2][2]=8
+Tab[0][2][0]=4
+Tab[0][2][1]=5
+Tab[0][2][2]=-2
 """
 Tab[0][2][3]=0
 Tab[0][2][4]=1
@@ -207,20 +229,23 @@ Tab[0][5][5]=0
 """
 
 Tab[1]=dict()
-Tab[1][0]=3
+Tab[1][0]=8
 Tab[1][1]=14
-Tab[1][2]=0
+Tab[1][2]=16
 """Tab[1][3]=3
 Tab[1][4]=3
 Tab[1][5]=3
 """
 
-#Tab=genererMatrice(20)
+# Tab=genererMatrice(10)
 Affiche(Tab)
 print("")
 Tab=pivotGauss(Tab)
-Affiche(Tab)
-print("")
-Tab=remonterGaus(Tab)
-Affiche(Tab)
-print(SiSolution(Tab))
+if Tab==False:
+	print(Tab)
+else:
+	Affiche(Tab)
+	print("")
+	Tab=remonterGaus(Tab)
+	Affiche(Tab)
+	print(SiSolution(Tab))
