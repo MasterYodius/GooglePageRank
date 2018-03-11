@@ -8,7 +8,10 @@ def Affiche(Tab) :
 		j=0
 		print("| ",end='')
 		while j<n:
-			print(Tab[0][i][j],end='  ')
+			if(Tab[0][i][j]<0.00001 and Tab[0][i][j] > -0.00001):
+				print("0",end='  ')
+			else:
+				print(Tab[0][i][j],end='  ')
 			j=j+1
 		print("| ",Tab[1][i]," |\n")
 		i=i+1
@@ -44,18 +47,31 @@ def organiser(Tab,pivot):#O(n^2)
 		k+=1
 	return Tab
 
+def SiSolution(Tab):#O(n^2)
+	n=len(Tab[0])
+	
+	for i in range (0,n):
+		retour=False
+		for j in range(0,n):
+			if(Tab[0][i][j]!=0):
+				retour=True
+		if(retour==False and Tab[1][i]!=0):
+			return False
+	return True
+
 def pivotGauss(Tab):#O(n^3)
 	n=len(Tab[0])
 	colonne = 0
 	for i in range(0,n):#O(n^3)
+		# print(i,colonne,"1")
+		# Affiche(Tab)
+		# print("")
+		
 		if Tab[0][i][colonne]==0:
-
-			#print(i,colonne,"1")
-			#Affiche(Tab)
-			#print("")
 			Tab = organiser(Tab,i)#O(n^2)
-			#print(i,colonne,"2")
-			#Affiche(Tab)
+		
+		# print(i,colonne,"2")
+		# Affiche(Tab)
 
 		if Tab[0][i][colonne]==0:
 			colonne+=1
@@ -69,14 +85,9 @@ def pivotGauss(Tab):#O(n^3)
 		if colonne==n:
 			break
 
-	for i in range(0,n):#si sur la diagonale il y a des chiffre neg on les divise par lui même pour le rendre positif
-		if(Tab[0][i][i]<0):
-			k=Tab[0][i][i]
-			for j in range(i,n):
-				Tab[0][i][j]=int(Tab[0][i][j]/k)
-			Tab[1][i]=int(Tab[1][i]/k)
+	
 
-
+		
 	if(SiSolution(Tab)):#O(n^2)
 		return Tab
 	else:
@@ -88,7 +99,7 @@ def remonterGaus(tab):#O(n^2)
 	colonne=n-1
 	while i>=0 and colonne>=0:
 		
-		if tab[0][i][colonne]!=1 and tab[0][i][colonne]!=0: #division 
+		if tab[0][i][colonne]!=0: #division 
 			coef=tab[0][i][colonne]
 			
 			for alex in range(i,n):
@@ -122,41 +133,51 @@ def remonterGaus(tab):#O(n^2)
 
 	return tab
 
-def Solution(tab):
-	
 
+def solution(tab):
+	n=len(tab[1])
+	i=0
+	col=0
+	libre=dict()
+	while i<n and col<n:
+		if(tab[0][i][col]==0):
+			libre[len(libre)]=col
+			col+=1
+		i+=1
+		col+=1
 
+	for i in range(len(libre)):
+		tab[1][libre[i]]="x"+ str(libre[i]+1)
 
+	i=n-1
+	col=n-1
+	while i>=0 and col >= 0:
+		#if tab[1][i]===(float)tab[1][i] or tab[1][i]===(int)tab[1][i]:
 
-"""	if(SiSolution(Tab)):
-		i=n
-		while i>0:
-			for j in range():
-			i-=1
-"""
-def SiSolution(Tab):#O(n^2)
-	n=len(Tab[0])
-	
-	for i in range (0,n):
-		retour=False
-		for j in range(0,n):
-			if(Tab[0][i][j]!=0):
-				retour=True
-		if(retour==False and Tab[1][i]!=0):
-			return False
-	return True
-
-
-
-"""def gausJordan(tab):
-	r=0
-	m=len(tab[1])
-	for j in range 0,m:
-"""
-
-
-
-
+		if isinstance(tab[1][i],float) or isinstance(tab[1][i],int):
+			ntm =tab[1][i]
+			tab[1][i]=str(tab[1][i])
+			alex=col+1
+			while alex<=n-1:
+				if(tab[0][i][alex]!=0):
+					print(tab[1][i])
+					print(tab[1][i]*(-1))
+					if(tab[0][i][alex]==-1 and ntm  == 0):
+						print("1")
+						tab[1][i]=tab[1][alex]
+					elif(tab[0][i][alex]==-1 and ntm  != 0):
+						tab[1][i]=str(tab[0][i][alex])+tab[1][alex]
+					elif (ntm  == 0):
+						print("2")
+						tab[1][i]=str(-(tab[0][i][alex]))+tab[1][alex]
+					else:
+						print("3")
+						tab[1][i]=str(tab[1][i])+str(-(tab[0][i][alex]))+tab[1][alex]
+				alex+=1  
+		i-=1
+		col-=1
+	print(tab[1])
+		
 
 def genererMatrice(n):
 	Tab=dict()
@@ -184,60 +205,58 @@ Tab[0]=dict()
 for i in range (0,3):
 	Tab[0][i]=dict()
 	
-Tab[0][0][0]=2
-Tab[0][0][1]=1
-Tab[0][0][2]=-4
-"""Tab[0][0][3]=0
-Tab[0][0][4]=0
-Tab[0][0][5]=1
-"""
-Tab[0][1][0]=3
-Tab[0][1][1]=3
-Tab[0][1][2]=-5
-"""Tab[0][1][3]=1
-Tab[0][1][4]=0
-Tab[0][1][5]=1
-"""
-Tab[0][2][0]=4
-Tab[0][2][1]=5
-Tab[0][2][2]=-2
-"""
-Tab[0][2][3]=0
-Tab[0][2][4]=1
-Tab[0][2][5]=0"""
-"""
-Tab[0][3][0]=0
-Tab[0][3][1]=0
-Tab[0][3][2]=1
-Tab[0][3][3]=0
-Tab[0][3][4]=0
-Tab[0][3][5]=1
+Tab[0][0][0]=1
+Tab[0][0][1]=2
+Tab[0][0][2]=3
+#Tab[0][0][3]=1
+# Tab[0][0][4]=1
+# Tab[0][0][5]=2
 
-Tab[0][4][0]=0
-Tab[0][4][1]=0
-Tab[0][4][2]=1
-Tab[0][4][3]=1
-Tab[0][4][4]=0
-Tab[0][4][5]=1
+Tab[0][1][0]=4
+Tab[0][1][1]=5
+Tab[0][1][2]=6
+#Tab[0][1][3]=0
+# Tab[0][1][4]=2
+# Tab[0][1][5]=5
 
-Tab[0][5][0]=1
-Tab[0][5][1]=1
-Tab[0][5][2]=1
-Tab[0][5][3]=0
-Tab[0][5][4]=1
-Tab[0][5][5]=0
-"""
+Tab[0][2][0]=7
+Tab[0][2][1]=8
+Tab[0][2][2]=9
+#Tab[0][2][3]=1
+# Tab[0][2][4]=6
+# Tab[0][2][5]=1
+
+# Tab[0][3][0]=1/3
+# Tab[0][3][1]=1
+# Tab[0][3][2]=0
+# Tab[0][3][3]=-1
+# Tab[0][3][4]=6
+# Tab[0][3][5]=4
+
+# Tab[0][4][0]=1
+# Tab[0][4][1]=0
+# Tab[0][4][2]=0
+# Tab[0][4][3]=3
+# Tab[0][4][4]=0
+# Tab[0][4][5]=0
+
+# Tab[0][5][0]=3
+# Tab[0][5][1]=4
+# Tab[0][5][2]=6
+# Tab[0][5][3]=3
+# Tab[0][5][4]=1
+# Tab[0][5][5]=0
+
 
 Tab[1]=dict()
-Tab[1][0]=8
-Tab[1][1]=14
-Tab[1][2]=16
-"""Tab[1][3]=3
-Tab[1][4]=3
-Tab[1][5]=3
-"""
+Tab[1][0]=0
+Tab[1][1]=0
+Tab[1][2]=0
+#Tab[1][3]=0
+# Tab[1][4]=2
+# Tab[1][5]=0
 
-# Tab=genererMatrice(10)
+#Tab=genererMatrice(18)
 Affiche(Tab)
 print("")
 Tab=pivotGauss(Tab)
@@ -248,4 +267,5 @@ else:
 	print("")
 	Tab=remonterGaus(Tab)
 	Affiche(Tab)
-	print(SiSolution(Tab))
+	solution(Tab)
+
