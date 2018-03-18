@@ -44,6 +44,8 @@ def organiser(Tab,pivot):#O(n^2)
 					Tab=echange(Tab,pivot,i)
 					return Tab
 				i=i+1
+		else:
+			return Tab
 		k+=1
 	return Tab
 
@@ -75,7 +77,8 @@ def pivotGauss(Tab):#O(n^3)
 
 		if Tab[0][i][colonne]==0:
 			colonne+=1
-
+		if colonne==n:
+			break
 		for j in range(i+1,n): #boucle pour calculer les lignes en dessous 
 			
 			if(Tab[0][j][colonne]!=0):
@@ -84,6 +87,7 @@ def pivotGauss(Tab):#O(n^3)
 		colonne+=1
 		if colonne==n:
 			break
+		
 
 	
 
@@ -98,7 +102,10 @@ def remonterGaus(tab):#O(n^2)
 	i=n-1
 	colonne=n-1
 	while i>=0 and colonne>=0:
-		
+		print("i",i,", colonne",colonne, " valeur ",tab[0][i][colonne])
+		Affiche(Tab)
+		if tab[0][i][colonne] > -0.000000000001 and tab[0][i][colonne] < 0.000000000001:
+			tab[0][i][colonne]=0
 		if tab[0][i][colonne]!=0: #division 
 			coef=tab[0][i][colonne]
 			
@@ -147,7 +154,7 @@ def solution(tab):
 		col+=1
 
 	for i in range(len(libre)):
-		tab[1][libre[i]]="x"+ str(libre[i]+1)
+		tab[1][libre[i]]="X"+ str(libre[i]+1)
 
 	i=n-1
 	col=n-1
@@ -160,18 +167,15 @@ def solution(tab):
 			alex=col+1
 			while alex<=n-1:
 				if(tab[0][i][alex]!=0):
-					print(tab[1][i])
-					print(tab[1][i]*(-1))
 					if(tab[0][i][alex]==-1 and ntm  == 0):
-						print("1")
 						tab[1][i]=tab[1][alex]
 					elif(tab[0][i][alex]==-1 and ntm  != 0):
 						tab[1][i]=str(tab[0][i][alex])+tab[1][alex]
 					elif (ntm  == 0):
-						print("2")
+				
 						tab[1][i]=str(-(tab[0][i][alex]))+tab[1][alex]
 					else:
-						print("3")
+					
 						tab[1][i]=str(tab[1][i])+str(-(tab[0][i][alex]))+tab[1][alex]
 				alex+=1  
 		i-=1
@@ -191,7 +195,7 @@ def genererMatrice(n):
 			if i==j:
 				Tab[0][i][j]=0
 			else:
-				Tab[0][i][j]=randint(0,n)
+				Tab[0][i][j]=randint(0,1)
 	Tab[1]=dict()
 	for i in range(0,n):
 		Tab[1][i]=randint(0,n)
@@ -202,48 +206,48 @@ def genererMatrice(n):
 Tab=dict()
 
 Tab[0]=dict()
-for i in range (0,3):
+for i in range (0,5):
 	Tab[0][i]=dict()
 	
-Tab[0][0][0]=1
-Tab[0][0][1]=2
-Tab[0][0][2]=3
-#Tab[0][0][3]=1
-# Tab[0][0][4]=1
-# Tab[0][0][5]=2
+Tab[0][0][0]=-1
+Tab[0][0][1]=1/4
+Tab[0][0][2]=1/4
+Tab[0][0][3]=1/4
+Tab[0][0][4]=1/4
+# Tab[0][0][5]=1
 
-Tab[0][1][0]=4
-Tab[0][1][1]=5
-Tab[0][1][2]=6
-#Tab[0][1][3]=0
-# Tab[0][1][4]=2
-# Tab[0][1][5]=5
+Tab[0][1][0]=0
+Tab[0][1][1]=-1
+Tab[0][1][2]=1/3
+Tab[0][1][3]=1/3
+Tab[0][1][4]=1/3
+# Tab[0][1][5]=0
 
-Tab[0][2][0]=7
-Tab[0][2][1]=8
-Tab[0][2][2]=9
-#Tab[0][2][3]=1
-# Tab[0][2][4]=6
+Tab[0][2][0]=0
+Tab[0][2][1]=0
+Tab[0][2][2]=-1
+Tab[0][2][3]=0
+Tab[0][2][4]=1
 # Tab[0][2][5]=1
 
-# Tab[0][3][0]=1/3
-# Tab[0][3][1]=1
-# Tab[0][3][2]=0
-# Tab[0][3][3]=-1
-# Tab[0][3][4]=6
-# Tab[0][3][5]=4
+Tab[0][3][0]=0
+Tab[0][3][1]=1/2
+Tab[0][3][2]=1/2
+Tab[0][3][3]=-1
+Tab[0][3][4]=0
+# Tab[0][3][5]=0
 
-# Tab[0][4][0]=1
-# Tab[0][4][1]=0
-# Tab[0][4][2]=0
-# Tab[0][4][3]=3
-# Tab[0][4][4]=0
-# Tab[0][4][5]=0
+Tab[0][4][0]=1/3
+Tab[0][4][1]=1/3
+Tab[0][4][2]=0
+Tab[0][4][3]=1/3
+Tab[0][4][4]=-1
+# Tab[0][4][5]=1
 
-# Tab[0][5][0]=3
-# Tab[0][5][1]=4
-# Tab[0][5][2]=6
-# Tab[0][5][3]=3
+# Tab[0][5][0]=0
+# Tab[0][5][1]=0
+# Tab[0][5][2]=1
+# Tab[0][5][3]=0
 # Tab[0][5][4]=1
 # Tab[0][5][5]=0
 
@@ -252,11 +256,11 @@ Tab[1]=dict()
 Tab[1][0]=0
 Tab[1][1]=0
 Tab[1][2]=0
-#Tab[1][3]=0
-# Tab[1][4]=2
+Tab[1][3]=0
+Tab[1][4]=0
 # Tab[1][5]=0
 
-#Tab=genererMatrice(18)
+#Tab=genererMatrice(6)
 Affiche(Tab)
 print("")
 Tab=pivotGauss(Tab)
