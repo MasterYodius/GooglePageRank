@@ -1,5 +1,5 @@
 from random import * 
-
+from reseau import *
 def Affiche(Tab) :
 	
 	i=0
@@ -102,8 +102,7 @@ def remonterGaus(tab):#O(n^2)
 	i=n-1
 	colonne=n-1
 	while i>=0 and colonne>=0:
-		print("i",i,", colonne",colonne, " valeur ",tab[0][i][colonne])
-		Affiche(Tab)
+		
 		if tab[0][i][colonne] > -0.000000000001 and tab[0][i][colonne] < 0.000000000001:
 			tab[0][i][colonne]=0
 		if tab[0][i][colonne]!=0: #division 
@@ -112,9 +111,6 @@ def remonterGaus(tab):#O(n^2)
 			for alex in range(i,n):
 				tab[0][i][alex]/=coef
 			tab[1][i]/=coef				
-			#Affiche(tab)	
-			#tab[1][i]/=tab[0][i][colonne]
-			#tab[0][i][colonne]/=tab[0][i][colonne]
 			ligne=1
 			while ligne <= i:#soustration
 				
@@ -159,7 +155,6 @@ def solution(tab):
 	i=n-1
 	col=n-1
 	while i>=0 and col >= 0:
-		#if tab[1][i]===(float)tab[1][i] or tab[1][i]===(int)tab[1][i]:
 
 		if isinstance(tab[1][i],float) or isinstance(tab[1][i],int):
 			ntm =tab[1][i]
@@ -167,7 +162,9 @@ def solution(tab):
 			alex=col+1
 			while alex<=n-1:
 				if(tab[0][i][alex]!=0):
-					if(tab[0][i][alex]==-1 and ntm  == 0):
+					# -0.9999999999 > -0.9999999999999999 > -1
+
+					if(tab[0][i][alex]>=-1 and tab[0][i][alex]<-0.9999999 and ntm  == 0):
 						tab[1][i]=tab[1][alex]
 					elif(tab[0][i][alex]==-1 and ntm  != 0):
 						tab[1][i]=str(tab[0][i][alex])+tab[1][alex]
@@ -181,7 +178,38 @@ def solution(tab):
 		i-=1
 		col-=1
 	print(tab[1])
-		
+
+def Projet(tab):
+	tab=pivotGauss(tab)
+	if tab!= False:
+		solution(remonterGaus(tab))
+	else:
+		print(False)
+
+def produitAlph(tab,a):
+	n=len(tab[0])
+	for i in range(n):
+		for j in range(n):
+			tab[0][i][j]*=a
+	return tab
+
+def pertinance(tab,alpha):
+	n=len(tab[0])
+	e=dict()
+	tab=produitAlph(tab,alpha)
+	Affiche(tab)
+	for i in range(n):
+		e[i]=dict()
+		for j in range(n):
+			print("avant","tab",tab[0][i][j])
+			e[i][j]=(1/n)*0.6*100
+			tab[0][i][j]*=100
+			tab[0][i][j]+=e[i][j]
+			tab[0][i][j]/=100
+			print("i",i,"j",j,"tab",tab[0][i][j], "e",e[i][j]/100)
+
+
+	#return tab
 
 def genererMatrice(n):
 	Tab=dict()
@@ -206,42 +234,42 @@ def genererMatrice(n):
 Tab=dict()
 
 Tab[0]=dict()
-for i in range (0,5):
+for i in range (0,4):
 	Tab[0][i]=dict()
 	
 Tab[0][0][0]=-1
-Tab[0][0][1]=1/4
-Tab[0][0][2]=1/4
+Tab[0][0][1]=1/2
+Tab[0][0][2]=1/2
 Tab[0][0][3]=1/4
-Tab[0][0][4]=1/4
+#Tab[0][0][4]=1/4
 # Tab[0][0][5]=1
 
 Tab[0][1][0]=0
 Tab[0][1][1]=-1
-Tab[0][1][2]=1/3
-Tab[0][1][3]=1/3
-Tab[0][1][4]=1/3
+Tab[0][1][2]=1/2
+Tab[0][1][3]=1/4
+#Tab[0][1][4]=1/3
 # Tab[0][1][5]=0
 
 Tab[0][2][0]=0
 Tab[0][2][1]=0
 Tab[0][2][2]=-1
-Tab[0][2][3]=0
-Tab[0][2][4]=1
+Tab[0][2][3]=1/4
+#Tab[0][2][4]=1
 # Tab[0][2][5]=1
 
-Tab[0][3][0]=0
+Tab[0][3][0]=1
 Tab[0][3][1]=1/2
-Tab[0][3][2]=1/2
-Tab[0][3][3]=-1
-Tab[0][3][4]=0
+Tab[0][3][2]=0
+Tab[0][3][3]=-3/4
+#Tab[0][3][4]=0
 # Tab[0][3][5]=0
 
-Tab[0][4][0]=1/3
-Tab[0][4][1]=1/3
-Tab[0][4][2]=0
-Tab[0][4][3]=1/3
-Tab[0][4][4]=-1
+# Tab[0][4][0]=1/3
+# Tab[0][4][1]=1/3
+# Tab[0][4][2]=0
+# Tab[0][4][3]=1/3
+# Tab[0][4][4]=-1
 # Tab[0][4][5]=1
 
 # Tab[0][5][0]=0
@@ -261,15 +289,19 @@ Tab[1][4]=0
 # Tab[1][5]=0
 
 #Tab=genererMatrice(6)
-Affiche(Tab)
-print("")
-Tab=pivotGauss(Tab)
-if Tab==False:
-	print(Tab)
-else:
-	Affiche(Tab)
-	print("")
-	Tab=remonterGaus(Tab)
-	Affiche(Tab)
-	solution(Tab)
+
+#Tab=dict()
+Tab[0]=creerReseau(5)
+for i in range(5):
+	Tab[1][i]=0
+AfficheReseau(Tab[0])
+print("\n")
+pertinance(Tab,0.4)
+print("\n")
+AfficheReseau(Tab[0])
+print("\n")
+Projet(Tab)
+
+
+
 
