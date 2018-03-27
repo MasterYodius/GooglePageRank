@@ -65,15 +65,15 @@ def pivotGauss(Tab):#O(n^3)
 	n=len(Tab[0])
 	colonne = 0
 	for i in range(0,n):#O(n^3)
-		print(i,colonne,"1")
-		Affiche(Tab)
-		print("")
+		# print(i,colonne,"1")
+		# Affiche(Tab)
+		# print("")
 		
 		if Tab[0][i][colonne]==0:
 			Tab = organiser(Tab,i)#O(n^2)
 		
-		print(i,colonne,"2")
-		Affiche(Tab)
+		# print(i,colonne,"2")
+		# Affiche(Tab)
 
 		if Tab[0][i][colonne]==0:
 			colonne+=1
@@ -87,11 +87,6 @@ def pivotGauss(Tab):#O(n^3)
 		colonne+=1
 		if colonne==n:
 			break
-		
-
-	
-
-		
 	if(SiSolution(Tab)):#O(n^2)
 		return Tab
 	else:
@@ -115,19 +110,18 @@ def remonterGaus(tab):#O(n^2)
 			while ligne <= i:#soustration
 				
 				coef=-1*tab[0][i-ligne][colonne]
-				#print("coef=",coef)
+	
 				alex=n-1
 				while alex>i-1:
-					print("cible",tab[0][i-ligne][alex],"pivot",tab[0][i][alex],"avant")
-					Affiche(tab)
+					# print("cible",tab[0][i-ligne][alex],"pivot",tab[0][i][alex],"avant")
+					# Affiche(tab)
 					
 					tab[0][i-ligne][alex]+=tab[0][i][alex]*coef
 					
-					print("cible",tab[0][i-ligne][alex],"pivot",tab[0][i][alex],"apres")
+					# print("cible",tab[0][i-ligne][alex],"pivot",tab[0][i][alex],"apres")
 					
 					alex-=1
 				tab[1][i-ligne]+=tab[1][i]*coef
-	#			tab[0][i-ligne][colonne]-=tab[0][i-ligne][colonne]*tab[0][i][colonne]
 
 				ligne+=1
 
@@ -254,10 +248,9 @@ def classement(Tab):
 				classemen[i],classemen[j]=classemen[j],classemen[i]
 
 	print('Classement des pages :')
-	i=0
+		
 	for i in range(len(classemen)):
-		print(i,':page ',classemen[i]+1) 
-	return classemen,a
+			print(i,": page ",classemen[i]+1," pertinance = ",a[i])
 
 
 
@@ -432,8 +425,8 @@ Tab[1]=dict()
 #Tab=genererMatrice(6)
 
 #Tab=dict()
-Tab[0]=creerReseau(30)
-for i in range(30):
+#ab[0]=creerReseau(30)
+for i in range(12):
 	Tab[1][i]=0
 AfficheReseau(Tab[0])
 print("\n")
@@ -443,7 +436,5 @@ print("\n")
 AfficheReseau(Tab[0])
 print("\n")
 Projet(Tab)
-a,b=classement(Tab)
-print(a)
-print(b)
+classement(Tab)
 
