@@ -1,0 +1,45 @@
+Fonction Gauss(Tab)
+	
+	(Pivot de Gauss)
+	n = taille de Tab
+	colonne = 0
+
+	Tantque ligne < n et colonne < n alors:		(on parcourt le tableau en diagonale)
+
+		Si Tab[ligne][colonne]=0 alors
+			Organisé(Tab)						(Organise le tableau de facon a obtenir une valeur non nul comme pivot sur la colonne actuel)
+		Si Tab[ligne][colonne]=0 alors
+			colonne = colonne + 1	      			(Si il y a que des 0 sur la colonne alors nous allons sur la prochaine colonne)
+		Si colonne = n alors					(si on depasse le dernier colonne du tableau)
+			break
+		Pour ligne2 allant de ligne+1 à n: 		(soustraire les lignes en dessous du pivot de facon a obtenir 0 à l'aide pivot sur la colonne actuel)
+			Soustraire(Tab,ligne,ligne2)
+		Si colonne = n alors
+			On break
+		colonne = colonne + 1
+		ligne = ligne + 1
+
+	<---------------------------------------->
+	
+	(Remonter de Gauss)
+
+	Tantque ligne >= 0 et colonne >= 0 alors:	(on parcourt le tableau en diagonale de bas en haut)
+		
+		Si Tab[ligne][colonne]!=0 :				(si sur la diagonale la valeur est différent de 0 )
+			
+			coef = tab[0][i][colonne]
+			Diviser(Tab,ligne,coef)				(fonction qui divise toute la ligne par coef)
+
+			ligne2 = 1
+			Tantque ligne2 <= ligne
+
+
+
+
+
+
+
+
+
+
+
