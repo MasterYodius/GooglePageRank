@@ -252,6 +252,11 @@ def classement(Tab):
 				a[j]=a[i]
 				a[i]=x
 				classemen[i],classemen[j]=classemen[j],classemen[i]
+
+	print('Classement des pages :')
+	i=0
+	for i in range(len(classemen)):
+		print(i,':page ',classemen[i]+1) 
 	return classemen,a
 
 
@@ -427,8 +432,8 @@ Tab[1]=dict()
 #Tab=genererMatrice(6)
 
 #Tab=dict()
-#Tab[0]=creerReseau(5)
-for i in range(12):
+Tab[0]=creerReseau(30)
+for i in range(30):
 	Tab[1][i]=0
 AfficheReseau(Tab[0])
 print("\n")
