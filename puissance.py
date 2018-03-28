@@ -53,7 +53,6 @@ def puissance(A,imax,E):
 		Xo[i]=1/sqrt(n)
 	k=1
 	Yk=produitMatrice(A,Xo)
-	print(moduleS(Yk,0))
 	Xk=produitVecteur(Yk,1/moduleS(Yk,0))
 
 
@@ -62,14 +61,11 @@ def puissance(A,imax,E):
 		Yk=produitMatrice(A,Xo)
 		Xk=produitVecteur(Yk,1/moduleS(Yk,0))
 		k+=1
-		
-	print(k)
+
 	return moduleS(Yk,0)
 
 
 
 A=creerReseau(5)
 AfficheReseau(A)
-v=[1,2,3,4,5]
 print(puissance(A,5000,1))
-#print(produitMatrice(A,v))
