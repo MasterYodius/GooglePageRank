@@ -168,12 +168,13 @@ def solution(tab):
 				alex+=1  
 		i-=1
 		col-=1
-	print(tab[1])
 
 def Projet(tab):
 	tab=pivotGauss(tab)
 	if tab!= False:
-		solution(remonterGaus(tab))
+		remo = remonterGaus(tab)
+		Affiche(remo)
+		solution(remo)
 	else:
 		print(False)
 
@@ -425,16 +426,19 @@ Tab[1]=dict()
 #Tab=genererMatrice(6)
 
 #Tab=dict()
-#ab[0]=creerReseau(30)
-for i in range(12):
+Tab[0]=creerReseau(30)
+for i in range(30):
 	Tab[1][i]=0
 AfficheReseau(Tab[0])
 print("\n")
 pertinance(Tab,0.85)
+print("\n")
+Affiche(Tab)
 moinsId(Tab)
 print("\n")
 AfficheReseau(Tab[0])
 print("\n")
 Projet(Tab)
 classement(Tab)
+
 
